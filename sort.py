@@ -7,7 +7,7 @@ class Sort:
 		temp=self.a[i]
 		self.a[i]=self.a[j]
 		self.a[j]=temp
-	    	
+		return self.a
 	def sort(self):
 		pass
 	def print_arr(self):
@@ -24,66 +24,69 @@ class Bubble(Sort):
 	
 
 class Quick_sort(Sort):
-	def partition(a,l,h):
+	def partition(self,l,h):
 		i=l
-		j=h
-		pivot=a[l]
+		j=h-1
+		pivot=self.a[l]
 		while(i<j):
-			while(i<=h and a[i]<=pivot):
+			while(i<=h and self.a[i]<=pivot):
 				i=i+1
-			while(j>l and a[j]>pivot):
+			while(j>l and self.a[j]>pivot):
 				j=j-1
 			if(i<j):
-				a=swap(a,i,j)
-		a=swap(a,j,l)
+				self.a=self.swap(i,j)
+		self.a=self.swap(j,l)
 		return j
 	def __init__(self,a):
 		Sort.__init__(self,a)
-	def quick(self):
+	def quick(self,l,h):
 		if(l<h):
-			j=partition(a,l,h)
-			a=quick(a,l,j)
-			a=quick(a,j+1,h)
+			j=self.partition(l,h)
+			self.a=self.quick(l,j)
+			self.a=self.quick(j+1,h)
 		return a
-
+	def sort(self):
+		self.quick(0,len(self.a))
 
 class Merge_sort(Sort):
-	def mergesort(a,l,mid,h):
+	def mergesort(self,l,mid,h):
 		i=l
 		k=l
 		j=mid+1
 		b=[0]*100 
-		while(i<=mid and j<=h):
-			if(a[i]<a[j]):
+		while(i<=mid and j<=h-1):
+			if(self.a[i]<self.a[j]):
 				#for i in range(len(a))
-				b[k]=a[i]
+				b[k]=self.a[i]
 				k=k+1
 				i=i+1
 			else:
 			#for j in range(len(a))
-				b[k]=a[j]
+				b[k]=self.a[j]
 				k=k+1
 				j=j+1
 
 		for i in range(i,mid+1):
-			b[k]=a[i]
+			b[k]=self.a[i]
 			k=k+1
-		for j in range(j,h+1):
-			b[k]=a[j]
+		for j in range(j,h):
+			b[k]=self.a[j]
 			k=k+1
-	#  k=0
-		for i in range(l,h+1):
-			a[i]=b[i]
-		#  k=k+1
-		def __init__(self,a):
-			Sort.__init__(self,a)
-		if(l<h):
-			mid=(l+h)//2
-			merge(a,l,mid)
-			merge(a,mid+1,h)
-			mergesort(a,l,mid,h)
-		return a
-
+	
+		for i in range(l,h):
+			self.a[i]=b[i]
+		
+	def __init__(self,a):
+		Sort.__init__(self,a)
+	def merge(self,l,h):
+			if(l<h):
+				mid=(l+h)//2
+				self.merge(l,mid)
+				self.merge(mid+1,h)
+				self.mergesort(l,mid,h)
+			return a
+	def sort(self):
+			self.merge(0,len(self.a))
 
 class Insertion_sort(Sort):
 	def __init__(self,a):
