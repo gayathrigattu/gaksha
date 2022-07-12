@@ -4,6 +4,7 @@
 #include "quick_sort.hpp"
 #include "merge_sort.hpp"
 #include "bubble_sort.hpp"
+#include "heap_sort.hpp"
 int main()
 {
 	int a[8],i;
@@ -41,6 +42,11 @@ int main()
 	B1.initializeRandoms(a,0,50,10);
 	B1.time(a,n);
 	B1.print_array(a,n);
+	
+	Heap_sort H1;
+	H1.initializeRandoms(a,0,50,10);
+	H1.time(a,n);
+	H1.print_array(a,n);
 	
 return 0;
 }
